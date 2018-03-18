@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
+    android:orientation="vertical"
     android:scrollbars="vertical"
     tools:context="com.evento.akay18.evento.AddEventFragment">
 
@@ -12,7 +13,8 @@
         android:id="@+id/titleIL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title">
+        android:hint="Title"
+        app:errorEnabled="true">
 
         <EditText
             android:id="@+id/titleView"
@@ -26,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleIL"
+        app:errorEnabled="true"
         android:hint="Name of organiser">
 
         <EditText
@@ -41,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/orgIL"
         android:hint="Description"
+        app:errorEnabled="true"
         android:maxHeight="50dp">
 
         <EditText
@@ -60,6 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descIL"
+        app:errorEnabled="true"
         android:hint="Phone Number">
 
         <android.support.design.widget.TextInputEditText
