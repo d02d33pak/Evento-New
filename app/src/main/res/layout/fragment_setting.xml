@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:text="SIGN OUT"
         android:shadowColor="#000"
         android:textColor="#fff"
         android:layout_margin="4dp"
         android:textSize="14sp"
-        android:background="@drawable/btn_background"
+        android:background="@drawable/style_logout"
         />
 
 

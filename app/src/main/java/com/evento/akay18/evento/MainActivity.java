@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
-        //Test Mera pehla commit
+
 
         //Bottom Navigation Bar
         bottomNavigation = findViewById(R.id.bottomNavigation);

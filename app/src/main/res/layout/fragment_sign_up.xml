@@ -10,14 +10,16 @@
 
     <android.support.design.widget.TextInputLayout
         app:errorEnabled="true"
+        app:hintEnabled="false"
         android:id="@+id/nameInputField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:gravity="center">
 
         <EditText
             android:id="@+id/nameField"
+            style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_person_black_24dp"
@@ -33,10 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/nameInputField"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:hintEnabled="false">
 
         <EditText
             android:id="@+id/emailField"
+            style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -54,10 +58,12 @@
         android:layout_alignParentStart="true"
         android:layout_below="@id/emailInputLayout"
         app:errorEnabled="true"
+        app:hintEnabled="false"
         app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/pwdField"
+            style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -74,10 +80,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pwdInputLayout"
         app:errorEnabled="true"
+        app:hintEnabled="false"
         app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/cnfPwdField"
+            style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -90,10 +98,13 @@
         android:id="@+id/mobInputField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cnfPwdInputField">
+        android:layout_below="@+id/cnfPwdInputField"
+        app:errorEnabled="true"
+        app:hintEnabled="false">
 
         <EditText
             android:id="@+id/mobField"
+            style="@style/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_phone_black_24dp"
@@ -103,12 +114,14 @@
 
     <Button
         android:id="@+id/signUpBtn"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@id/mobInputField"
+        android:background="@drawable/style_signup"
+        android:shadowColor="#000"
         android:text="SIGN UP"
-        android:theme="@style/MyButton" />
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="14sp" />
 
 </RelativeLayout>
