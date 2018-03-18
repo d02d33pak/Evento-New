@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context="com.evento.akay18.evento.SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,16 +12,13 @@
         android:id="@+id/signOutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="SIGN OUT"
-        android:shadowColor="#000"
-        android:textColor="#fff"
-        android:layout_margin="4dp"
-        android:textSize="14sp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/style_logout"
-        />
+        android:shadowColor="#000"
+        android:text="SIGN OUT"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="14sp" />
 
 
 </FrameLayout>

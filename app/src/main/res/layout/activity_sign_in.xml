@@ -32,6 +32,7 @@
             android:elevation="12dp"
             app:tabBackground="@color/colorPrimary"
             app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorBack"
             app:tabSelectedTextColor="@color/colorBack"
             app:tabTextColor="@color/colorGrey">
 
