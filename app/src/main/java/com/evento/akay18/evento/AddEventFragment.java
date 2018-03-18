@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -54,10 +56,15 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
     private DatabaseReference mRef;
+
     private String date, time, location;
+    private boolean isTitleEmpty, isOrgEmpty, isDescEmpty, isNumEmpty;
+
+    private TextInputLayout titleIL, orgIL, descIL, numIL;
     private EditText titleView, orgView, descView, phNumView;
     private ImageButton addDateBtn, addTimeBtn, addLocationBtn;
-    Button uploadBtn;
+    private Button uploadBtn;
+
     int PLACE_PICKER_REQUEST = 1;
     private GoogleApiClient mGoogleClient;
     private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -91,6 +98,10 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         orgView = view.findViewById(R.id.orgView);
         descView = view.findViewById(R.id.descView);
         phNumView = view.findViewById(R.id.numView);
+        titleIL = view.findViewById(R.id.titleIL);
+        orgIL = view.findViewById(R.id.orgIL);
+        descIL = view.findViewById(R.id.descIL);
+        numIL = view.findViewById(R.id.numIL);
         addDateBtn = view.findViewById(R.id.addDateBtn);
         addTimeBtn = view.findViewById(R.id.addTimeBtn);
         addLocationBtn = view.findViewById(R.id.addLocBtn);
@@ -137,8 +148,11 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
             public void onClick(View v) {
                 mUser = mAuth.getCurrentUser();
                 mRef = mDatabase.getReference("event_details/"+getRandomEID(10));
-                EventDetails ed = new EventDetails(mUser.getUid().toString(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
-                mRef.setValue(ed);
+                checkIfFieldsEmpty();
+                if(!isTitleEmpty || !isOrgEmpty || !isDescEmpty || !isNumEmpty){
+                    EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
+                    mRef.setValue(ed);
+                }
             }
         });
 
@@ -218,6 +232,32 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    //Form Validation
+    private void checkIfFieldsEmpty(){
+        if(titleView.getText().toString().isEmpty()){
+            titleIL.setError("Title required!");
+            isTitleEmpty = true;
+        } else
+            isTitleEmpty = false;
+        if(orgView.getText().toString().isEmpty()){
+            orgIL.setError("Organiser required!");
+            isOrgEmpty = true;
+        } else
+            isOrgEmpty = false;
+        if(descView.getText().toString().isEmpty()){
+            descIL.setError("Description required!");
+            isDescEmpty = true;
+        } else
+            isDescEmpty = false;
+        if(phNumView.getText().toString().isEmpty()){
+            numIL.setError("Phone number required!");
+            isNumEmpty = true;
+        } else
+            isNumEmpty = false;
 
     }
 

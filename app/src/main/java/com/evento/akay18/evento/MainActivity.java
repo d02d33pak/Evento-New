@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
-
-
         //Bottom Navigation Bar
         bottomNavigation = findViewById(R.id.bottomNavigation);
         AHBottomNavigationItem item_feed = new AHBottomNavigationItem(R.string.item_feed, R.drawable.ic_home_black_24dp, R.color.item_feed);
