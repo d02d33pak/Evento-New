@@ -241,23 +241,34 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         if(titleView.getText().toString().isEmpty()){
             titleIL.setError("Title required!");
             isTitleEmpty = true;
-        } else
+        } else {
+            titleIL.setError(null);
             isTitleEmpty = false;
+        }
+
         if(orgView.getText().toString().isEmpty()){
             orgIL.setError("Organiser required!");
             isOrgEmpty = true;
-        } else
+        } else{
+            orgIL.setError(null);
             isOrgEmpty = false;
+        }
+
         if(descView.getText().toString().isEmpty()){
             descIL.setError("Description required!");
             isDescEmpty = true;
-        } else
+        } else{
+            descIL.setError(null);
             isDescEmpty = false;
+        }
+
         if(phNumView.getText().toString().isEmpty()){
             numIL.setError("Phone number required!");
             isNumEmpty = true;
-        } else
+        } else{
+            numIL.setError(null);
             isNumEmpty = false;
+        }
 
     }
 
