@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Evento</string>
+
+    <string name="sign_in">Already a member</string>
+    <string name="sign_out">I\'m new here</string>
+    <string name="client_id">812103936388-686eknuhqjnsurgo6bv5m1ljmv9mvffb.apps.googleusercontent.com</string>
+
+    //Bottom Navigation Bar
+    <string name="item_feed">Feed</string>
+    <string name="item_profile">Profile</string>
+    <string name="item_set">Settings</string>
+    <string name="item_search">Search</string>
+    <string name="item_addEvent">Add Event</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
