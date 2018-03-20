@@ -100,6 +100,7 @@
 
     <Button
         android:id="@+id/uploadBtn"
+        android:background="@drawable/style_signup"
         android:layout_below="@id/addDateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

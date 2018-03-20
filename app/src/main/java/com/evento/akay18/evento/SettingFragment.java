@@ -30,7 +30,7 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
@@ -48,10 +48,11 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
-
     public void signOut() {
         mAuth.signOut();
     }
 
 
+
 }
+
