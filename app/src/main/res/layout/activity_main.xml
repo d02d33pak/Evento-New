@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     tools:context="com.evento.akay18.evento.MainActivity">
 
     <com.evento.akay18.evento.NoSwipePager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.evento.akay18.evento.NoSwipePager>
+        android:layout_height="match_parent"/>
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottomNavigation"
@@ -21,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"></com.aurelhubert.ahbottomnavigation.AHBottomNavigation>
+        app:layout_constraintVertical_bias="1.0"/>
 
 
 </android.support.constraint.ConstraintLayout>

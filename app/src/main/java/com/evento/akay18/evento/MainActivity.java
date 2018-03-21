@@ -2,6 +2,7 @@ package com.evento.akay18.evento;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -48,6 +49,7 @@ import java.util.List;
 import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
     private AHBottomNavigation bottomNavigation;
@@ -134,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
         this.bottomNavigation.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
         // Force to tint the drawable (useful for font with icon for example)
         this.bottomNavigation.setForceTint(true);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

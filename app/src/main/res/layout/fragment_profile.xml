@@ -20,6 +20,7 @@
 
     <TextView
         android:text="UserName"
+        android:textColor="#333"
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +36,7 @@
 
     <TextView
         android:text="Email"
+        android:textColor="#333"
         android:id="@+id/userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

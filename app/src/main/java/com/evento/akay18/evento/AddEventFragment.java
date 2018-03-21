@@ -1,17 +1,14 @@
 package com.evento.akay18.evento;
 
 
-import android.*;
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -80,7 +77,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
 
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_addevent, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_event, container, false);
 
         //Google Location API
         mGoogleClient = new GoogleApiClient.Builder(getContext())

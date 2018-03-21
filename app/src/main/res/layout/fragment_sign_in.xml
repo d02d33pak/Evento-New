@@ -4,7 +4,6 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg"
     android:orientation="vertical"
     android:padding="8dp"
     tools:context="com.evento.akay18.evento.SignInFragment">
@@ -26,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_person_black_24dp"
-            android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>

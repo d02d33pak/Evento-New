@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@drawable/style_logout"
+        android:background="@drawable/style_signout"
         android:shadowColor="#000"
         android:text="SIGN OUT"
         android:textAllCaps="true"
