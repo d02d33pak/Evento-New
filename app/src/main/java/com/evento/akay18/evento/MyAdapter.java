@@ -42,7 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
         holder.eventOrganiser.setText("Organiser: "+mylist.getOrganiser());
         holder.eventDate.setText("Date: "+mylist.getDate());
         holder.eventTime.setText("Time: "+mylist.getTime());
-        holder.eventLocation.setText(mylist.getLocation());
+        holder.eventLocation.setText("Venue: "+mylist.getLocation());
         holder.eventDetails.setText("Description: "+mylist.getDescription());
     }
 

@@ -57,10 +57,11 @@ public class EventDetails {
         return location;
     }
 
-
     public String getPhoneNum() {
         return phoneNum;
     }
+
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -81,7 +82,6 @@ public class EventDetails {
     public void setLocation(String location) {
         this.location = location;
     }
-
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;

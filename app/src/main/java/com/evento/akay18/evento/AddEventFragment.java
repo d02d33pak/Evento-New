@@ -9,9 +9,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,12 +57,12 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
     private DatabaseReference mRef;
 
     private String date, time, location;
-    private boolean isTitleEmpty, isOrgEmpty, isDescEmpty, isNumEmpty;
+    private boolean isTitleEmpty, isOrgEmpty, isDescEmpty, isNumEmpty, isDateEmpty, isTimeEmpty, isLocationEmpty;
 
     private TextInputLayout titleIL, orgIL, descIL, numIL;
     private EditText titleView, orgView, descView, phNumView;
-    private ImageButton addDateBtn, addTimeBtn, addLocationBtn;
-    private Button uploadBtn;
+    private ImageButton addTimeBtn, addLocationBtn;
+    private Button uploadBtn, addDateBtn;
 
     int PLACE_PICKER_REQUEST = 1;
     private GoogleApiClient mGoogleClient;
@@ -146,9 +148,12 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
                 mUser = mAuth.getCurrentUser();
                 mRef = mDatabase.getReference("event_details/"+getRandomEID(10));
                 checkIfFieldsEmpty();
-                if(!isTitleEmpty || !isOrgEmpty || !isDescEmpty || !isNumEmpty){
+                if(!isTitleEmpty && !isOrgEmpty && !isDescEmpty && !isNumEmpty && !isDateEmpty && !isTimeEmpty && !isLocationEmpty){
                     EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
                     mRef.setValue(ed);
+                }
+                else{
+                    Snackbar.make(getView(), "Please Fill All the Details", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,6 +178,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         String format = "dd/MM/YYYY";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
         date = sdf.format(myCalendar.getTime());
+        addDateBtn.setText(date);
     }
 
     //Time Picker Listener
@@ -196,7 +202,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getContext(),data);
-                location = String.format("Place: %s", place.getName());
+                location = String.format("%s", place.getName());
             }
         }
     }
@@ -267,6 +273,13 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
             numIL.setError(null);
             isNumEmpty = false;
         }
+
+        isDateEmpty = TextUtils.isEmpty(date);
+
+        isTimeEmpty = TextUtils.isEmpty(time);
+
+        isLocationEmpty = TextUtils.isEmpty(location);
+
 
     }
 

@@ -25,6 +25,7 @@
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_title_black_24dp"
             android:ems="10"
+            android:singleLine="true"
             android:hint="Event Name" />
 
     </android.support.design.widget.TextInputLayout>
@@ -45,6 +46,7 @@
             android:layout_weight="1"
             android:drawableEnd="@drawable/ic_account_balance_black_24dp"
             android:ems="10"
+            android:singleLine="true"
             android:hint="Name of Organiser" />
 
     </android.support.design.widget.TextInputLayout>
@@ -102,15 +104,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageButton
+        <!--<ImageButton-->
+            <!--android:id="@+id/addDateBtn"-->
+            <!--android:background="@drawable/style_white"-->
+            <!--android:layout_width="88dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:padding="8dp"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--app:srcCompat="@drawable/ic_event_black_24dp" />-->
+
+        <Button
             android:id="@+id/addDateBtn"
             android:background="@drawable/style_white"
             android:layout_width="88dp"
             android:layout_height="40dp"
             android:padding="8dp"
             android:layout_alignParentStart="true"
-            app:srcCompat="@drawable/ic_event_black_24dp" />
-
+            android:drawableStart="@drawable/ic_event_black_24dp" />
 
         <ImageButton
             android:id="@+id/addTimeBtn"
