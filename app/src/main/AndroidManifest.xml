@@ -23,10 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".EmailVerification" />
         <activity android:name=".NotifyUser" />
-        <activity android:name=".AddEventActivity"></activity>
         <activity
             android:name=".Intro"
             android:theme="@style/Theme.Intro">

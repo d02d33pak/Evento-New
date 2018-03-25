@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Evento</string>
 
-    <string name="sign_in">Sing In</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Already a member</string>
+    <string name="sign_out">I\'m new here</string>
     <string name="client_id">812103936388-686eknuhqjnsurgo6bv5m1ljmv9mvffb.apps.googleusercontent.com</string>
 
     //Bottom Navigation Bar

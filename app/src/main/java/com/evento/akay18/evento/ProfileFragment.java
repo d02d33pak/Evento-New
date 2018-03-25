@@ -45,22 +45,24 @@ public class ProfileFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        mRef = mDatabase.getReference().child("userdata").child(mUser.getUid());
+        userName.setText(mUser.getDisplayName());
+        userEmail.setText(mUser.getEmail());
+
+        /*mRef = mDatabase.getReference().child("userdata").child(mUser.getUid());
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    name = dataSnapshot.child("name").getValue().toString();
-                    email = dataSnapshot.child("email").getValue().toString();
-                    userName.setText(name);
-                    userEmail.setText(email);
+                    //name = dataSnapshot.child("name").getValue().toString();
+                    //email = dataSnapshot.child("email").getValue().toString();
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("ERROR", databaseError.getMessage());
             }
-        });
+        });*/
         return view;
     }
 
