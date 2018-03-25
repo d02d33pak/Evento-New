@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -36,7 +37,7 @@ public class SignUpFragment extends Fragment {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private FirebaseUser mUser;
-    private boolean validName = true, validEmail = true, validPwd = true, validMob = true, validCnf = true ;
+    private boolean validName = true, validEmail = true, validPwd = true, validMob = true, validCnf = true;
     private View focusView = null;
     private TextInputLayout emailIL, pwdIL, nameIL, cnfPwdIL, mobIL;
     private ProgressDialog progress;
@@ -88,10 +89,8 @@ public class SignUpFragment extends Fragment {
                 checkPassword();
                 checkCnfPwd();
                 checkMob();
-                if(validName && validEmail && validPwd && validCnf && validMob){
+                if (validName && validEmail && validPwd && validCnf && validMob) {
                     createAccount(email, password);
-                    autoSignIn(email, password);
-                    signOut();
                 }
             }
         });
@@ -127,14 +126,14 @@ public class SignUpFragment extends Fragment {
     }
 
     //Password validation
-    protected void checkPassword(){
+    protected void checkPassword() {
         if (TextUtils.isEmpty(password)) {
             focusView = pwdIL;
-            pwdIL.setError("Password Required");
+            pwdIL.setError("Password Required!");
             validPwd = false;
-        }else if (!isPasswordVerified(password)){
+        } else if (!isPasswordVerified(password)) {
             focusView = pwdIL;
-            pwdIL.setError("Password too short");
+            pwdIL.setError("Password too short!");
             validPwd = false;
         } else {
             validPwd = true;
@@ -143,26 +142,26 @@ public class SignUpFragment extends Fragment {
     }
 
     //Check Confirm Password
-    private void checkCnfPwd(){
-        if(password.equals(cnfPwd)){
+    private void checkCnfPwd() {
+        if (password.equals(cnfPwd)) {
             validCnf = true;
             cnfPwdIL.setError(null);
         } else {
             focusView = cnfPwdIL;
-            cnfPwdIL.setError("Password does not match");
+            cnfPwdIL.setError("Password does not match!");
             validCnf = false;
         }
     }
 
     //Mobile Validation
-    private void checkMob(){
-        if(TextUtils.isEmpty(mob)){
+    private void checkMob() {
+        if (TextUtils.isEmpty(mob)) {
             focusView = mobIL;
-            mobIL.setError("Mobile number required");
+            mobIL.setError("Mobile Number required!");
             validMob = false;
-        } else if (mob.length() < 10){
+        } else if (mob.length() != 10) {
             focusView = mobIL;
-            mobIL.setError("Invalid mobile number");
+            mobIL.setError("Invalid Mobile Number!");
             validMob = false;
         } else {
             validMob = true;
@@ -183,20 +182,18 @@ public class SignUpFragment extends Fragment {
     }
 
     //Create account method
-    private void createAccount(String email, String password) {
-        progress.setTitle("Signing Up");
-        progress.setMessage("Please Wait...");
-        progress.setCancelable(false);
-        progress.show();
+    private void createAccount(final String email, final String password) {
+        showProgress();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.i("Inside Create Account:" , "Sign up successful");
-                    progress.dismiss();
+                if (task.isSuccessful()) {
+                    Log.i("Inside Create Account:", "Sign Up Successful");
+                    autoSignIn(email, password);
                 } else {
-                    Log.i("Inside Create Account:" , "Sign up failed");
-                    progress.dismiss();
+                    Log.i("Inside Create Account:", "Sign Up Failed");
+                    hideProgress();
+                    Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -204,44 +201,61 @@ public class SignUpFragment extends Fragment {
 
     //Auto sign in to save data at firebase database
     private void autoSignIn(final String email, String password) {
-        progress.setTitle("Sending verification email");
-        progress.setMessage("Please Wait...");
-        progress.setCancelable(false);
-        progress.show();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    progress.dismiss();
                     mUser = mAuth.getCurrentUser();
                     mUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Snackbar.make(getView(), "Verification link sent. Please confirm!", Snackbar.LENGTH_SHORT).show();
+                            if (task.isSuccessful()) {
+                                Snackbar.make(getView(), "Verification Link Sent. Please Confirm!", Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });
                     saveUserData(mUser);
                 } else {
-                    progress.dismiss();
-                    Snackbar.make(getView(), "Something went wrong. Please try again!", Snackbar.LENGTH_SHORT).show();
+                    hideProgress();
+                    Snackbar.make(getView(), "Something Went Wrong! Please Try Again.", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     //TODO: A method to save user data at firebase database
-    private void saveUserData(FirebaseUser currentUser){
+    private void saveUserData(FirebaseUser currentUser) {
         userID = currentUser.getUid();
         User user = new User(fullName, email, mob);
         mRef.child(userID).setValue(user);
+        signOut();
+        clearFields();
+        hideProgress();
+    }
+
+    // Clear all input field
+    private void clearFields(){
+        mNameField.getText().clear();
+        mEmailField.getText().clear();
+        mPwdField.getText().clear();
+        mCnfPwdField.getText().clear();
+        mMobField.getText().clear();
     }
 
     //Sign out method
-    private void signOut(){
+    private void signOut() {
         mAuth.signOut();
-        Intent intent = new Intent(getActivity(), SignInActivity.class);
-        startActivity(intent);
+    }
+
+    // >> Progress dialog
+    public void showProgress() {
+        progress.setTitle("Signing Up");
+        progress.setMessage("Please Wait...");
+        progress.setCancelable(false);
+        progress.show();
+    }
+
+    public void hideProgress() {
+        progress.dismiss();
     }
 }
