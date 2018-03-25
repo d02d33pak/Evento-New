@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.SnapshotMetadata;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,53 +36,75 @@ import java.util.ArrayList;
  */
 public class FeedFragment extends Fragment {
 
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private List<EventDetails> mEventList;
+
     public FeedFragment() {
         // Required empty public constructor
     }
 
-
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mRef;
-    ArrayList <String> mFetchedList;
-    ArrayAdapter<String> mAdapter;
-    EventDetails mEvent;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
+
+        mRecyclerView = view.findViewById(R.id.mRecycler);
+
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference("event_details");
-        mFetchedList = new ArrayList<>();
-        mAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,
-                mFetchedList);
-        mEvent = new EventDetails();
 
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        final ListView eventList = view.findViewById(R.id.eventList);
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(mEventList, getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot mDS : dataSnapshot.getChildren())
-                {
-                    mEvent = mDS.getValue(EventDetails.class);
-                    mFetchedList.add(mEvent.getTitle());
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                mEventList = new ArrayList<EventDetails>();
+                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+
+                    EventDetails value = dataSnapshot1.getValue(EventDetails.class);
+                    EventDetails eDetails = new EventDetails();
+                    String eventName = value.getTitle();
+                    String eventOrg = value.getOrganiser();
+                    String eventDesc = value.getDescription();
+                    String eventLoc = value.getLocation();
+                    String eventDate = value.getDate();
+                    String eventTime = value.getTime();
+                    eDetails.setTitle(eventName);
+                    eDetails.setOrganiser(eventOrg);
+                    eDetails.setDescription(eventDesc);
+                    eDetails.setLocation(eventLoc);
+                    eDetails.setDate(eventDate);
+                    eDetails.setTime(eventTime);
+                    mEventList.add(eDetails);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
-                eventList.setAdapter(mAdapter);
+
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("------ERROR", databaseError.getMessage());
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Hello", "Failed to read value.", error.toException());
             }
         });
-
-
-
 
 
         return view;

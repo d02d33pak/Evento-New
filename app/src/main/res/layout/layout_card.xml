@@ -6,53 +6,63 @@
     android:id="@+id/mCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="#efefef"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardBackgroundColor="#FAFAFA"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
+        android:background="#FAFAFA"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/info_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
             android:textColor="#1b1b1b"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/info_org"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:layout_below="@id/info_event"
-            android:textColor="#2b2b2b"
-            android:textSize="16sp" />
+            android:textColor="#4b4b4b"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/info_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:layout_below="@id/info_org"
             android:textColor="#1b1b1b"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/info_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="0dp"
             android:layout_below="@id/info_detail"
-            android:textColor="#2b2b2b"
-            android:textSize="16sp" />
+            android:textColor="#4b4b4b"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/info_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/info_location"
-            android:textColor="#2b2b2b"
-            android:textSize="16sp" />
+            android:textColor="#4b4b4b"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/info_time"
@@ -61,8 +71,8 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/info_date"
             android:layout_below="@id/info_location"
-            android:textColor="#2b2b2b"
-            android:textSize="16sp" />
+            android:textColor="#4b4b4b"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

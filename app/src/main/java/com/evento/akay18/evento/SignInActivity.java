@@ -93,10 +93,10 @@ public class SignInActivity extends AppCompatActivity {
         };
 
         adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
     }
@@ -142,11 +142,11 @@ public class SignInActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position){
                 case 0:
-                    return "Log In";
+                    return "Sign In";
                 case 1:
                     return "Sign Up";
                 default:
-                    return getString(R.string.sign_in);
+                    return "Sign In";
             }
         }
 

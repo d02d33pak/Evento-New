@@ -26,16 +26,6 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
 
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mRef;
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-    private List<EventDetails> mEventList;
-
-
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -44,58 +34,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mRef = mDatabase.getReference("event_details");
-
-
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-
-
-        mRecyclerView = view.findViewById(R.id.mRecycler);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(mEventList, getContext());
-        mRecyclerView.setAdapter(mAdapter);
-
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                mEventList = new ArrayList<EventDetails>();
-                for(DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
-
-                    EventDetails value = dataSnapshot1.getValue(EventDetails.class);
-                    EventDetails eDetails = new EventDetails();
-                    String eventName = value.getTitle();
-                    String eventOrg = value.getOrganiser();
-                    String eventDesc = value.getDescription();
-                    String eventLoc = value.getLocation();
-                    String eventDate = value.getDate();
-                    String eventTime = value.getTime();
-                    eDetails.setTitle(eventName);
-                    eDetails.setOrganiser(eventOrg);
-                    eDetails.setDescription(eventDesc);
-                    eDetails.setLocation(eventLoc);
-                    eDetails.setDate(eventDate);
-                    eDetails.setTime(eventTime);
-                    mEventList.add(eDetails);
-                    mRecyclerView.setAdapter(mAdapter);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Hello", "Failed to read value.", error.toException());
-            }
-        });
 
         return view;
     }
