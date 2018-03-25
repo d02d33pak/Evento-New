@@ -2,8 +2,10 @@ package com.evento.akay18.evento;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -149,17 +151,46 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
                 mRef = mDatabase.getReference("event_details/"+getRandomEID(10));
                 checkIfFieldsEmpty();
                 if(!isTitleEmpty && !isOrgEmpty && !isDescEmpty && !isNumEmpty && !isDateEmpty && !isTimeEmpty && !isLocationEmpty){
-                    EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
-                    mRef.setValue(ed);
+                    alertConfirm();
                 }
                 else{
-                    Snackbar.make(getView(), "Please Fill All the Details", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Please fill all the details.", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
         return view;
     }
+
+    // >> Alert Dialog box
+    private void alertConfirm(){
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setPositiveButton("Yes, I'm sure", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
+                mRef.setValue(ed);
+                clearFields();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setTitle("Upload Event").setMessage("Are you sure?").setCancelable(false).create().show();
+    }
+
+    // << End Alert Dialog
+
+    // >> Clear event data fields
+    private void clearFields(){
+        titleView.getText().clear();
+        orgView.getText().clear();
+        descView.getText().clear();
+        phNumView.getText().clear();
+        addDateBtn.setText("");
+    }
+    // << End Clearing
 
     //Date Picker Listener
     final Calendar myCalendar = Calendar.getInstance();
@@ -201,7 +232,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getContext(),data);
-                location = String.format("%s", place.getName());
+                location = place.getName().toString();
             }
         }
     }

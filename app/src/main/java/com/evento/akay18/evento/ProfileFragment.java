@@ -2,11 +2,13 @@ package com.evento.akay18.evento;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +26,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private FirebaseUser mUser;
-    private DatabaseReference mRef;
+    private DatabaseReference mRef, queryRef;
     static private String name, email;
 
 
@@ -46,23 +48,27 @@ public class ProfileFragment extends Fragment {
         mUser = mAuth.getCurrentUser();
 
         userName.setText(mUser.getDisplayName());
+        if (TextUtils.isEmpty(userName.getText())) {
+            mRef = mDatabase.getReference().child("userdata").child(mUser.getUid());
+
+            mRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    name = dataSnapshot.child("name").getValue().toString();
+                    userName.setText(name);
+                    //email = dataSnapshot.child("email").getValue().toString();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("ERROR", databaseError.getMessage());
+                }
+            });
+        }
         userEmail.setText(mUser.getEmail());
 
-        /*mRef = mDatabase.getReference().child("userdata").child(mUser.getUid());
+        queryRef = mDatabase.getReference().child("event_details");
 
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                    //name = dataSnapshot.child("name").getValue().toString();
-                    //email = dataSnapshot.child("email").getValue().toString();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("ERROR", databaseError.getMessage());
-            }
-        });*/
         return view;
     }
 

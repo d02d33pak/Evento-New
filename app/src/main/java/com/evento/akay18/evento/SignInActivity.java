@@ -78,19 +78,6 @@ public class SignInActivity extends AppCompatActivity {
 
         //Get Firebase Auth Instance.
         mAuth = FirebaseAuth.getInstance();
-        //Get AuthStateListener Instance
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    //User is signed in
-                }
-                else{
-                    //User is signed out
-                }
-            }
-        };
 
         adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.viewPager);
@@ -101,25 +88,16 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
-        //mAuth.addAuthStateListener(mAuthListener);
         mUser = mAuth.getCurrentUser();
         if(mUser != null){
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
         }
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {

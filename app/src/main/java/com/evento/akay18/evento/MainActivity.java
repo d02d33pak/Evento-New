@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private NoSwipePager viewPager;
     private BottomBarAdapter pagerAdapter;
-
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
 
     @Override

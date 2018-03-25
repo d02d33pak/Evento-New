@@ -240,6 +240,7 @@ public class SignInFragment extends Fragment {
             if (mUser.isEmailVerified()) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             } else {
                 Snackbar.make(getView(), "Please Verify Your Email First!", Snackbar.LENGTH_SHORT).show();
                 mAuth.signOut();

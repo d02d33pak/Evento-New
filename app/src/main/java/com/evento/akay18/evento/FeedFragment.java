@@ -1,9 +1,5 @@
 package com.evento.akay18.evento;
 
-
-import android.app.ActivityOptions;
-import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,7 +63,7 @@ public class FeedFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         mAdapter = new MyAdapter(mEventList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
@@ -94,9 +91,8 @@ public class FeedFragment extends Fragment {
                     eDetails.setDate(eventDate);
                     eDetails.setTime(eventTime);
                     mEventList.add(eDetails);
-                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
@@ -105,7 +101,6 @@ public class FeedFragment extends Fragment {
                 Log.w("Hello", "Failed to read value.", error.toException());
             }
         });
-
 
         return view;
     }
