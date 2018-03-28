@@ -8,8 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyButton" parent="Theme.AppCompat.Light">
+    <style name="MyButton" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:colorControlHighlight">@color/colorButton</item>
+        <!--TRYING-->
+        <item name="colorPrimary">@color/colorPrimary2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark2</item>
+        <item name="colorAccent">@color/colorAccent2</item>
     </style>
 
     <style name="edit_text">

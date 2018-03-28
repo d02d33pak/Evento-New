@@ -1,5 +1,7 @@
 package com.evento.akay18.evento;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -116,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        setCustomTheme(true);
     }
 
 
@@ -147,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         moveTaskToBack(true);
+    }
+
+    public void setCustomTheme(boolean isChecked) {
+        if(isChecked){
+            setTheme(R.style.MyButton);
+        }
+        else {
+            setTheme(R.style.AppTheme);
+        }
     }
 
     //Handle Fragments at BNB

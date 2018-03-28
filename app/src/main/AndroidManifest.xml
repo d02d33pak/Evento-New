@@ -20,23 +20,23 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".EmailVerification" />
         <activity android:name=".NotifyUser" />
         <activity
             android:name=".Intro"
-            android:theme="@style/Theme.Intro">
-
-        </activity>
+            android:theme="@style/Theme.Intro"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDMsgnwxEa9Ln1Jo3iayXgjl_rBZmglweg" />
+
     </application>
 
 </manifest>

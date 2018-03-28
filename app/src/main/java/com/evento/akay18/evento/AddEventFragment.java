@@ -8,7 +8,10 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -63,8 +66,8 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
 
     private TextInputLayout titleIL, orgIL, descIL, numIL;
     private EditText titleView, orgView, descView, phNumView;
-    private ImageButton addTimeBtn, addLocationBtn;
-    private Button uploadBtn, addDateBtn;
+    private ImageButton addDateBtn, addTimeBtn, addLocationBtn;
+    private Button addDateBtnText, addTimeBtnText, uploadBtn ;
 
     int PLACE_PICKER_REQUEST = 1;
     private GoogleApiClient mGoogleClient;
@@ -106,6 +109,8 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         addDateBtn = view.findViewById(R.id.addDateBtn);
         addTimeBtn = view.findViewById(R.id.addTimeBtn);
         addLocationBtn = view.findViewById(R.id.addLocBtn);
+        addDateBtnText = view.findViewById(R.id.addDateBtnText);
+        addTimeBtnText = view.findViewById(R.id.addTimeBtnText);
         uploadBtn = view.findViewById(R.id.uploadBtn);
 
         addDateBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,10 +121,25 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
             }
         });
 
+        addDateBtnText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getContext(), dateListener, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
         addTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(getContext(), timeListener, myCalendar.get(Calendar.HOUR), myCalendar.get(Calendar.MINUTE), true).show();
+                new TimePickerDialog(getContext(), timeListener, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false).show();
+            }
+        });
+
+        addTimeBtnText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(getContext(), timeListener, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false).show();
             }
         });
 
@@ -188,7 +208,11 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         orgView.getText().clear();
         descView.getText().clear();
         phNumView.getText().clear();
-        addDateBtn.setText("");
+        addDateBtnText.setText("");
+        addTimeBtnText.setVisibility(View.GONE);
+        addTimeBtn.setVisibility(View.VISIBLE);
+        addDateBtnText.setVisibility(View.GONE);
+        addDateBtn.setVisibility(View.VISIBLE);
     }
     // << End Clearing
 
@@ -205,26 +229,31 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
     };
 
     private void saveDate() {
-        String format = "dd/MM/YYYY";
+        String format = "dd/MM/YY";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
         date = sdf.format(myCalendar.getTime());
-        addDateBtn.setText(date);
+        addDateBtn.setVisibility(View.GONE);
+        addDateBtnText.setVisibility(View.VISIBLE);
+        addDateBtnText.setText(date);
     }
 
     //Time Picker Listener
     TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-            myCalendar.set(Calendar.HOUR, selectedHour);
+            myCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
             myCalendar.set(Calendar.MINUTE, selectedMinute);
             saveTime();
         }
     };
 
     private void saveTime() {
-        String format = "HH:mm";
+        String format = "hh:mm a";
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
         time = sdf.format(myCalendar.getTime());
+        addTimeBtn.setVisibility(View.GONE);
+        addTimeBtnText.setVisibility(View.VISIBLE);
+        addTimeBtnText.setText(time);
     }
 
     //Location Picker
