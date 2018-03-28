@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +31,7 @@ public class SettingFragment extends Fragment {
 
 
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
     public SettingFragment() {
@@ -39,6 +44,16 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        //Configure Google Sign
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id))
+                .requestEmail()
+                .build();
+
+        //Configure Google Sign Client
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+
 
         Button btnSignOut = view.findViewById(R.id.signOutBtn);
         Switch themeSwitch = view.findViewById(R.id.themeSwitch);
@@ -47,7 +62,6 @@ public class SettingFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ((MainActivity) getActivity()).setCustomTheme(isChecked);
-                restart();
             }
         });
 
@@ -68,11 +82,8 @@ public class SettingFragment extends Fragment {
 
     public void signOut() {
         mAuth.signOut();
+        mGoogleSignInClient.signOut();
     }
 
-    public void restart() {
-        Intent i = new Intent(getContext(), MainActivity.class);
-        startActivity(i);
-    }
 
 }
