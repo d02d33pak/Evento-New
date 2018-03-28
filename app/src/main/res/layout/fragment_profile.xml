@@ -1,10 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context="com.evento.akay18.evento.ProfileFragment">
@@ -13,26 +13,26 @@
             android:id="@+id/userInfoCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="8dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp">
 
                 <ImageView
                     android:id="@+id/userPic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_face_black_36dp"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_face_black_36dp" />
 
                 <TextView
                     android:id="@+id/userName"
@@ -40,9 +40,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:layout_toEndOf="@id/userPic"
+                    android:text="User Name"
                     android:textColor="#1b1b1b"
-                    android:textSize="18sp"
-                    android:text="User Name"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/userEmail"
@@ -50,9 +50,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/userName"
                     android:layout_toEndOf="@id/userPic"
+                    android:text="User Email"
                     android:textColor="#4b4b4b"
-                    android:textSize="14sp"
-                    android:text="User Email"/>
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -62,9 +62,12 @@
             android:id="@+id/userRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/userInfoCard"
             android:layout_marginBottom="56dp"
             android:scrollbars="vertical" />
+
 
     </RelativeLayout>
 
 </ScrollView>
+
