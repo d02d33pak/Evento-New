@@ -1,73 +1,84 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:context="com.evento.akay18.evento.ProfileFragment">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.CardView
+        android:id="@+id/userInfoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.evento.akay18.evento.ProfileFragment">
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/userInfoCard"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="8dp">
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp">
 
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/userPic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp">
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_face_black_36dp" />
 
-                <ImageView
-                    android:id="@+id/userPic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_face_black_36dp" />
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_toEndOf="@id/userPic"
+                android:text="User Name"
+                android:textColor="#1b1b1b"
+                android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_toEndOf="@id/userPic"
-                    android:text="User Name"
-                    android:textColor="#1b1b1b"
-                    android:textSize="18sp" />
+            <TextView
+                android:id="@+id/userEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userName"
+                android:layout_toEndOf="@id/userPic"
+                android:text="User Email"
+                android:textColor="#4b4b4b"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/userEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
-                    android:layout_toEndOf="@id/userPic"
-                    android:text="User Email"
-                    android:textColor="#4b4b4b"
-                    android:textSize="14sp" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/userRecycler"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/userInfoCard"
-            android:layout_marginBottom="56dp"
-            android:scrollbars="vertical" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="80dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="My Events"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/userRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="56dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
 
 
-    </RelativeLayout>
+</RelativeLayout>
 
-</ScrollView>
 

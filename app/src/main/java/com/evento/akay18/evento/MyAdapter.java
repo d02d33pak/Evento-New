@@ -1,15 +1,21 @@
 package com.evento.akay18.evento;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.EventLog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by d02d33pak on 16/3/18.
@@ -37,13 +43,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
 
     @Override
     public void onBindViewHolder(mViewHolder holder, int position) {
-        EventDetails mylist = eventList.get(position);
+        final EventDetails mylist = eventList.get(position);
         holder.eventName.setText(mylist.getTitle());
         holder.eventOrganiser.setText("Organiser: "+mylist.getOrganiser());
         holder.eventDate.setText("Date: "+mylist.getDate());
         holder.eventTime.setText("Time: "+mylist.getTime());
         holder.eventLocation.setText("Venue: "+mylist.getLocation());
         holder.eventDetails.setText("Description: "+mylist.getDescription());
+
+        holder.eventDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String MapURL = "http://maps.google.co.in/maps?q="+ mylist.getLocation().replace(" ","+").trim();
+                Log.i("URL ---- ", MapURL);
+                MainActivity man = new MainActivity();
+                man.openMaps(MapURL);
+            }
+        });
     }
 
     @Override
@@ -62,10 +78,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder {
-        TextView eventName, eventOrganiser, eventDetails, eventLocation, eventDate, eventTime;
+        TextView eventName, eventOrganiser, eventDetails, eventLocation, eventDate, eventTime, eventDirection;
 
 
-        public mViewHolder(View itemView) {
+        public mViewHolder(final View itemView) {
             super(itemView);
             eventName = itemView.findViewById(R.id.info_event);
             eventOrganiser = itemView.findViewById(R.id.info_org);
@@ -73,6 +89,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
             eventTime = itemView.findViewById(R.id.info_time);
             eventDetails = itemView.findViewById(R.id.info_detail);
             eventLocation = itemView.findViewById(R.id.info_location);
+            eventDirection = itemView.findViewById(R.id.info_direction);
 
         }
     }

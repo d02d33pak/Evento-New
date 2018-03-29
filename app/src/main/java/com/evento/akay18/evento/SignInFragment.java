@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +40,7 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.ProviderQueryResult;
 
 import java.util.concurrent.Executor;
 
@@ -48,7 +50,7 @@ import java.util.concurrent.Executor;
 public class SignInFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "HereIsTheProblem";
+    private static final String TAG = "----Here Problem----";
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -61,7 +63,7 @@ public class SignInFragment extends Fragment {
     private EditText mEmailField, mPwdField;
     private String email, password;
     private View focusView = null;
-    private boolean notEmpty = true;
+    private boolean notEmpty = true, emailAlreadyExist, check;
     private ConnectivityManager mConnMgr;
     private NetworkChangeReceiver mReceiver;
     private TextInputLayout emailIL, pwdIL;
@@ -76,7 +78,6 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
-
 
 
         //Instantiate views
@@ -116,7 +117,7 @@ public class SignInFragment extends Fragment {
 //                //Intent Filter will receive System Broadcast.
                 IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 //
-                  //Register Broadcast receiver with the filter.
+                //Register Broadcast receiver with the filter.
 //                //So that whenever a change is made in network onReceive method is called.
                 getActivity().registerReceiver(mReceiver, filter);
 
@@ -170,26 +171,33 @@ public class SignInFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                String checkEmail = account.getEmail();
+
+                check = checkIfEmailExists(checkEmail);
+                Log.i("------ CHECK IS ---- ", String.valueOf(check));
+                if (check) {
+                    Toast.makeText(getContext(), "You are Welcome!", Toast.LENGTH_SHORT).show();
+                    firebaseAuthWithGoogle(account);
+                } else {
+                    Toast.makeText(getContext(), "Sorry! You have to Sign Up first.", Toast.LENGTH_SHORT).show();
+                }
             } catch (ApiException e) {
                 // The ApiException status code indicates the detailed failure reason.
                 // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                Log.w(TAG, "SignIn failed " , e);
+                Log.w(TAG, "SignIn failed ", e);
                 Toast.makeText(getActivity(), "Sign_in Failed", Toast.LENGTH_SHORT).show();
             }
         }
     }
     // [END onactivityresult]
 
-    // >> exchange google account token id with firebase credentials to authenticate user with firebase
+    // >> Exchange google account token id with firebase credentials to authenticate user with firebase
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "***firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -213,6 +221,18 @@ public class SignInFragment extends Fragment {
     }
     // << end of exchange
 
+    // >> Check if email already exists
+    private boolean checkIfEmailExists(String email) {
+        mAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+            @Override
+            public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+                    emailAlreadyExist = !task.getResult().getProviders().isEmpty();
+                    Log.i("--Email IF --", String.valueOf(emailAlreadyExist));
+            }
+        });
+        return emailAlreadyExist;
+    }
+
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
@@ -227,7 +247,7 @@ public class SignInFragment extends Fragment {
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
+                        //TODO:
                     }
                 });
     }

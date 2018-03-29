@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment {
 
         // User profile data
         userName.setText(mUser.getDisplayName());
+
         if (TextUtils.isEmpty(userName.getText())) {
             mRef = mDatabase.getReference().child("userdata").child(mUser.getUid());
 
