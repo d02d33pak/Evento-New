@@ -1,9 +1,13 @@
 package com.evento.akay18.evento;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
 import agency.tango.materialintroscreen.SlideFragmentBuilder;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import android.Manifest;
 
 public class Intro extends MaterialIntroActivity {
@@ -11,6 +15,12 @@ public class Intro extends MaterialIntroActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/circular_std_book.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         enableLastSlideAlphaExitTransition(true);
 
@@ -42,6 +52,11 @@ public class Intro extends MaterialIntroActivity {
                 .title("Last Instruction Shown Here")
                 .description("Lets Startx`")
                 .build());
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

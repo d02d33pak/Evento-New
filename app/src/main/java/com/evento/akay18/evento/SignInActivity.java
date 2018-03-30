@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class SignInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -31,9 +35,18 @@ public class SignInActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private SectionsPagerAdapter adapter;
 
+    Boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/circular_std_book.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
         setContentView(R.layout.activity_sign_in);
 
         //  Declare a new thread to do a preference check
@@ -135,8 +148,27 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            moveTaskToBack(true);
+            return;
+        }
+        doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press Back Again To Exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+
+        }, 2000);
+
     }
 }

@@ -83,6 +83,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
 
         public mViewHolder(final View itemView) {
             super(itemView);
+            context = itemView.getContext();
             eventName = itemView.findViewById(R.id.info_event);
             eventOrganiser = itemView.findViewById(R.id.info_org);
             eventDate = itemView.findViewById(R.id.info_date);

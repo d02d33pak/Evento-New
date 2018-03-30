@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
-    static Boolean filterState = false;
+    static Boolean filterState = false, doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,11 +164,6 @@ public class MainActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-    }
 
     public void setCustomTheme(boolean isChecked) {
         if (isChecked) {
@@ -213,11 +209,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.filter_event) {
             if (filterState == false) {
-                Toast.makeText(this,"City Filter Turned ON",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "City Filter Turned ON", Toast.LENGTH_LONG).show();
                 editor.putBoolean("filterState", true).apply();
                 filterState = preferences.getBoolean("filterState", true);
             } else {
-                Toast.makeText(this,"City Filter Turned OFF",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "City Filter Turned OFF", Toast.LENGTH_LONG).show();
                 editor.putBoolean("filterState", false).apply();
                 filterState = preferences.getBoolean("filterState", false);
             }
@@ -227,5 +223,25 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            moveTaskToBack(true);
+            return;
+        }
+        doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press Back Again To Exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+
+        }, 2000);
+
     }
 }
