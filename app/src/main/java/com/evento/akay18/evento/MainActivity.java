@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.preference.PreferenceManager;
@@ -22,6 +23,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionProvider;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -60,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private NoSwipePager viewPager;
     private BottomBarAdapter pagerAdapter;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     private Activity activity;
 
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
+    static Boolean filterState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                if(!wasSelected){
+                if (!wasSelected) {
                     viewPager.setCurrentItem(position);
                 }
                 return true;
@@ -125,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setCustomTheme(true);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
     }
 
 
@@ -159,16 +170,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setCustomTheme(boolean isChecked) {
-        if(isChecked){
+        if (isChecked) {
             setTheme(R.style.MyButton);
-        }
-        else {
+        } else {
             setTheme(R.style.AppTheme);
         }
     }
 
     //Handle Fragments at BNB
-    public class BottomBarAdapter extends SmartFragmentStatePagerAdapter{
+    public class BottomBarAdapter extends SmartFragmentStatePagerAdapter {
 
         private final List<Fragment> fragments = new ArrayList<>();
 
@@ -176,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             super(fragmentManager);
         }
 
-        public void addFragments(Fragment fragment){
+        public void addFragments(Fragment fragment) {
             fragments.add(fragment);
         }
 
@@ -191,9 +201,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openMaps(String MapURL){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MapURL));
-        startActivity(activity,intent, null);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.filter_event) {
+            if (filterState == false) {
+                Toast.makeText(this,"City Filter Turned ON",Toast.LENGTH_LONG).show();
+                editor.putBoolean("filterState", true).apply();
+                filterState = preferences.getBoolean("filterState", true);
+            } else {
+                Toast.makeText(this,"City Filter Turned OFF",Toast.LENGTH_LONG).show();
+                editor.putBoolean("filterState", false).apply();
+                filterState = preferences.getBoolean("filterState", false);
+            }
+
+            Log.i("-----FILTER STATE-----", filterState.toString());
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

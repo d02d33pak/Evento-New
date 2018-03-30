@@ -6,7 +6,7 @@
     <string name="client_id">812103936388-686eknuhqjnsurgo6bv5m1ljmv9mvffb.apps.googleusercontent.com</string>
 
     //Bottom Navigation Bar
-    <string name="item_feed">Feed</string>
+    <string name="item_feed">Home</string>
     <string name="item_profile">Profile</string>
     <string name="item_set">Settings</string>
     <string name="item_search">Search</string>

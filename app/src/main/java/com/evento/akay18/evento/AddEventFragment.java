@@ -8,10 +8,9 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -43,8 +42,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
@@ -61,7 +62,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
     private FirebaseUser mUser;
     private DatabaseReference mRef;
 
-    private String date, time, location;
+    private String date, time, location, city;
     private boolean isTitleEmpty, isOrgEmpty, isDescEmpty, isNumEmpty, isDateEmpty, isTimeEmpty, isLocationEmpty;
 
     private TextInputLayout titleIL, orgIL, descIL, numIL;
@@ -72,6 +73,8 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
     int PLACE_PICKER_REQUEST = 1;
     private GoogleApiClient mGoogleClient;
     private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    Geocoder geocoder;
 
 
     public AddEventFragment() {
@@ -112,6 +115,8 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         addDateBtnText = view.findViewById(R.id.addDateBtnText);
         addTimeBtnText = view.findViewById(R.id.addTimeBtnText);
         uploadBtn = view.findViewById(R.id.uploadBtn);
+
+        geocoder = new Geocoder(getContext());
 
         addDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +193,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         alertDialog.setPositiveButton("Yes, I'm sure", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, phNumView.getText().toString());
+                EventDetails ed = new EventDetails(mUser.getUid(), titleView.getText().toString(), orgView.getText().toString(), descView.getText().toString(), date, time, location, city, phNumView.getText().toString());
                 mRef.setValue(ed);
                 clearFields();
             }
@@ -197,7 +202,7 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
-        }).setTitle("Upload Event").setMessage("Are you sure?").setCancelable(false).create().show();
+        }).setTitle("Upload Event").setMessage("Are you sure that all the Details are correct?").setCancelable(false).create().show();
     }
 
     // << End Alert Dialog
@@ -261,6 +266,13 @@ public class AddEventFragment extends Fragment implements GoogleApiClient.Connec
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getContext(),data);
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1);
+                    city = addresses.get(0).getLocality();
+                }
+                catch (IOException e){
+                    Log.i("City Error",e.getMessage());
+                }
                 location = place.getName().toString();
             }
         }

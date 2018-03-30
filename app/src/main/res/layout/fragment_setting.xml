@@ -44,6 +44,17 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/chngCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/style_signin"
+        android:text="CHOOSE CITY"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+
+    <Button
         android:id="@+id/chngPwBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

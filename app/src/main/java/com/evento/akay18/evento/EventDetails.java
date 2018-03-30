@@ -5,18 +5,27 @@ package com.evento.akay18.evento;
  */
 
 public class EventDetails {
-    private String title, organiser, description, date, time, location, phoneNum, uid;
+    private String title;
+    private String organiser;
+    private String description;
+    private String date;
+    private String time;
+    private String location;
+    private String city;
+    private String phoneNum;
+    private String uid;
 
     public EventDetails() {
     }
 
-    public EventDetails(String uid, String title, String organiser, String description, String date, String time, String location, String phoneNum) {
+    public EventDetails(String uid, String title, String organiser, String description, String date, String time, String location, String city, String phoneNum) {
         this.title = title;
         this.organiser = organiser;
         this.description = description;
         this.date = date;
         this.time = time;
         this.location = location;
+        this.city = city;
         this.phoneNum = phoneNum;
         this.uid = uid;
     }
@@ -57,10 +66,11 @@ public class EventDetails {
         return location;
     }
 
+    public String getCity() { return city; }
+
     public String getPhoneNum() {
         return phoneNum;
     }
-
 
 
     public void setTitle(String title) {
@@ -82,6 +92,8 @@ public class EventDetails {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public void setCity(String city) { this.city = city; }
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;

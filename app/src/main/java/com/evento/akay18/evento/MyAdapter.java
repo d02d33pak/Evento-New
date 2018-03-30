@@ -56,8 +56,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.mViewHolder> {
             public void onClick(View view) {
                 String MapURL = "http://maps.google.co.in/maps?q="+ mylist.getLocation().replace(" ","+").trim();
                 Log.i("URL ---- ", MapURL);
-                MainActivity man = new MainActivity();
-                man.openMaps(MapURL);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(MapURL));
+                context.startActivity(intent);
             }
         });
     }
