@@ -31,12 +31,13 @@
         <activity android:name=".NotifyUser" />
         <activity
             android:name=".Intro"
-            android:theme="@style/Theme.Intro"></activity>
+            android:theme="@style/Theme.Intro" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDMsgnwxEa9Ln1Jo3iayXgjl_rBZmglweg" />
 
+        <activity android:name=".ResetActivity"></activity>
     </application>
 
 </manifest>

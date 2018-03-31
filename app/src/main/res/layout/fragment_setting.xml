@@ -55,12 +55,12 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/chngPwBtn"
+        android:id="@+id/chngPwdBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/style_signup"
-        android:text="CHANGE PASSWORD"
+        android:text="RESET PASSWORD"
         android:textAllCaps="true"
         android:textColor="#fff"
         android:textSize="14sp" />

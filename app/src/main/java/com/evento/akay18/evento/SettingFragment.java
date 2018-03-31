@@ -55,7 +55,7 @@ public class SettingFragment extends Fragment {
     int PLACE_PICKER_REQUEST = 1;
     Geocoder geocoder;
     static String city;
-    Button btnChngCity;
+    Button btnChngCity, btnResetPwd, btnSignOut;
 
     private SharedPreferences.Editor editor;
     private SharedPreferences preferences;
@@ -87,8 +87,13 @@ public class SettingFragment extends Fragment {
         editor = preferences.edit();
 
 
-        Button btnSignOut = view.findViewById(R.id.signOutBtn);
+
         btnChngCity = view.findViewById(R.id.chngCity);
+        btnResetPwd = view.findViewById(R.id.chngPwdBtn);
+        btnSignOut = view.findViewById(R.id.signOutBtn);
+
+
+
         Switch themeSwitch = view.findViewById(R.id.themeSwitch);
 
         themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -114,6 +119,14 @@ public class SettingFragment extends Fragment {
                 } catch (GooglePlayServicesRepairableException e) {
                     Log.e("TEST", "Failed");
                 }
+            }
+        });
+
+        btnResetPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ResetActivity.class);
+                startActivity(intent);
             }
         });
 

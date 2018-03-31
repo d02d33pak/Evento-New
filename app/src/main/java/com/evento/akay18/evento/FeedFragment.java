@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -88,11 +87,12 @@ public class FeedFragment extends Fragment {
 
         filterState = preferences.getBoolean("filterState", false);
 
+        city = preferences.getString("MyCity", "");
 
         if (filterState) {
-            city = preferences.getString("MyCity", "");
+            if (city.isEmpty())
+                Toast.makeText(getContext(), "First Select CITY from Settings", Toast.LENGTH_LONG).show();
             Query query = queryRef.child("event_details").orderByChild("city").equalTo(city);
-
             // Just attach the data from query to our adapter
             query.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -125,8 +125,7 @@ public class FeedFragment extends Fragment {
 
                 }
             });
-        }
-        else {
+        } else {
             mRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -164,6 +163,5 @@ public class FeedFragment extends Fragment {
 
         return view;
     }
-
 
 }

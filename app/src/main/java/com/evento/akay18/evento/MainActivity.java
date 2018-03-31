@@ -91,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Bottom Navigation Bar
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        AHBottomNavigationItem item_feed = new AHBottomNavigationItem(R.string.item_feed, R.drawable.ic_home_black_24dp, R.color.item_feed);
-        AHBottomNavigationItem item_search = new AHBottomNavigationItem(R.string.item_search, R.drawable.ic_search_black_24dp, R.color.item_profile);
-        AHBottomNavigationItem item_add = new AHBottomNavigationItem(R.string.item_addEvent, R.drawable.ic_add_circle_outline_black_24dp, R.color.item_profile);
-        AHBottomNavigationItem item_profile = new AHBottomNavigationItem(R.string.item_profile, R.drawable.ic_person_black_24dp, R.color.item_feed);
-        AHBottomNavigationItem item_set = new AHBottomNavigationItem(R.string.item_set, R.drawable.ic_settings_black_24dp, R.color.item_set);
+        AHBottomNavigationItem item_feed = new AHBottomNavigationItem(R.string.item_feed, R.drawable.ic_home_white_24dp, R.color.item_feed);
+        AHBottomNavigationItem item_search = new AHBottomNavigationItem(R.string.item_search, R.drawable.ic_search_white_24dp, R.color.item_profile);
+        AHBottomNavigationItem item_add = new AHBottomNavigationItem(R.string.item_addEvent, R.drawable.ic_add_circle_outline_white_24dp, R.color.item_profile);
+        AHBottomNavigationItem item_profile = new AHBottomNavigationItem(R.string.item_profile, R.drawable.ic_person_white_24dp, R.color.item_feed);
+        AHBottomNavigationItem item_set = new AHBottomNavigationItem(R.string.item_set, R.drawable.ic_settings_white_24dp, R.color.item_set);
         bottomNavigation.addItem(item_feed);
         bottomNavigation.addItem(item_search);
         bottomNavigation.addItem(item_add);
@@ -209,11 +209,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.filter_event) {
             if (filterState == false) {
-                Toast.makeText(this, "City Filter Turned ON", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "City Filter Turned ON", Toast.LENGTH_SHORT).show();
                 editor.putBoolean("filterState", true).apply();
                 filterState = preferences.getBoolean("filterState", true);
             } else {
-                Toast.makeText(this, "City Filter Turned OFF", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "City Filter Turned OFF", Toast.LENGTH_SHORT).show();
                 editor.putBoolean("filterState", false).apply();
                 filterState = preferences.getBoolean("filterState", false);
             }

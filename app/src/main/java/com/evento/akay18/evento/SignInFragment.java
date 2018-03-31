@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -61,6 +62,7 @@ public class SignInFragment extends Fragment {
     private Button mSignInBtn;
     private SignInButton gSignInBtn;
     private EditText mEmailField, mPwdField;
+    private TextView forgotPwd;
     private String email, password;
     private View focusView = null;
     private boolean notEmpty = true, emailAlreadyExist, check;
@@ -86,6 +88,7 @@ public class SignInFragment extends Fragment {
         mSignInBtn = view.findViewById(R.id.signInBtn);
         emailIL = view.findViewById(R.id.emailInputLayout);
         pwdIL = view.findViewById(R.id.pwdInputLayout);
+        forgotPwd = view.findViewById(R.id.forgotPwdTxt);
         progress = new ProgressDialog(getContext());
 
         //Google Sign In Button
@@ -137,6 +140,15 @@ public class SignInFragment extends Fragment {
                     }
 
                 }
+            }
+        });
+
+        //FORGOT PASSWORD LISTENER
+        forgotPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ResetActivity.class);
+                startActivity(intent);
             }
         });
 

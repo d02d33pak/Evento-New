@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#EEEEEE"
+    tools:context="com.evento.akay18.evento.SignInFragment">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/resetEmailInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:errorEnabled="true"
+        app:hintEnabled="false"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="100dp">
+
+        <EditText
+            android:id="@+id/resetEmailField"
+            style="@style/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_email_black_24dp"
+            android:hint="Enter Your Email"
+            android:inputType="textEmailAddress" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/resetEmailInputLayout"
+        android:background="@drawable/style_signin"
+        android:shadowColor="#000"
+        android:text="Reset Password"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

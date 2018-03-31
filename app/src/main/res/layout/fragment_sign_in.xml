@@ -27,6 +27,7 @@
             android:drawableEnd="@drawable/ic_person_black_24dp"
             android:hint="Email"
             android:inputType="textEmailAddress" />
+
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -63,13 +64,23 @@
         android:textColor="#fff"
         android:textSize="14sp" />
 
+    <TextView
+        android:id="@+id/forgotPwdTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signInBtn"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="14dp"
+        android:text="Forgot Password?"/>
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/gSingIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/signInBtn"
-        android:layout_marginEnd="72dp"
-        android:layout_marginTop="88dp" />
+        android:layout_below="@+id/forgotPwdTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"/>
 
 
 </RelativeLayout>
